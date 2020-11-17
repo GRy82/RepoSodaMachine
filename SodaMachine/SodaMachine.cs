@@ -26,12 +26,23 @@ namespace SodaMachine
         //A method to fill the sodamachines register with coin objects.
         public void FillRegister()
         {
-           
+            
+
         }
         //A method to fill the sodamachines inventory with soda can objects.
         public void FillInventory()
         {
-            
+            //rather arbitrary number of each flavor of soda objects generated.
+            //Can be done dynamically with dictionary, but to avoid changing the starter code, will do one by one.
+            Can orangeOne = new OrangeSoda();
+            Can orangeTwo = new OrangeSoda();
+            Can orangeThree = new OrangeSoda();
+            Can rootBeerOne = new RootBeer();
+            Can rootBeerTwo = new RootBeer();
+            Can rootBeerThree = new RootBeer();
+            Can colaOne = new Cola();
+            Can colaTwo = new Cola();
+            Can colaThree = new Cola();
         }
         //Method to be called to start a transaction.
         //Takes in a customer which can be passed freely to which ever method needs it.
@@ -52,6 +63,8 @@ namespace SodaMachine
         {
             string sodaName = UserInterface.SodaSelection(_inventory);
             Can desiredProduct = GetSodaFromInventory(sodaName);
+            List<Coin> payment = customer.GatherCoinsFromWallet(desiredProduct);
+            CalculateTransaction(payment, desiredProduct, customer);
         }
         //Gets a soda from the inventory based on the name of the soda.
         private Can GetSodaFromInventory(string nameOfSoda)
@@ -62,7 +75,6 @@ namespace SodaMachine
                 indexScanner++;
             }
             Can desiredProduct = _inventory[indexScanner];
-            _inventory.RemoveAt(indexScanner); //This may have to be done somewhere else.
             return desiredProduct;
         }
 
