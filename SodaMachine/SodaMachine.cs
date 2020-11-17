@@ -140,8 +140,9 @@ namespace SodaMachine
                         }
                     }
                 }
-                return changeCoins;
+                return changeCoins;//You have tried every coin type, but you can't reach the required amount of change exactly.
             }
+            return changeCoins;//Amount reached. Return correct change as list.
         }
         private List<Coin> GenerateCoinTemplate()
         {
@@ -156,7 +157,16 @@ namespace SodaMachine
         //If it does have one, return true.  Else, false.
         private bool RegisterHasCoin(string name)
         {
-           
+            int registerIndex = 0;
+            while(_register[registerIndex].Name != name)
+            {
+                registerIndex++;
+                if (registerIndex >= _register.Count)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         //Reusable method to return a coin from the register.
         //Returns null if no coin can be found of that name.

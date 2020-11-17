@@ -14,6 +14,7 @@ namespace SodaMachine
         public Penny()
         {
             value = .01;
+            Name = "Penny";
         }
         //Member Methods (Can Do)
     }
