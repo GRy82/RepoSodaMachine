@@ -50,12 +50,20 @@ namespace SodaMachine
         //pass payment to the calculate transaction method to finish up the transaction based on the results.
         private void Transaction(Customer customer)
         {
-           
+            string sodaName = UserInterface.SodaSelection(_inventory);
+            Can desiredProduct = GetSodaFromInventory(sodaName);
         }
         //Gets a soda from the inventory based on the name of the soda.
         private Can GetSodaFromInventory(string nameOfSoda)
         {
-          
+            int indexScanner = 0;
+            while(_inventory[indexScanner].Name != nameOfSoda)
+            {
+                indexScanner++;
+            }
+            Can desiredProduct = _inventory[indexScanner];
+            _inventory.RemoveAt(indexScanner); //This may have to be done somewhere else.
+            return desiredProduct;
         }
 
         //This is the main method for calculating the result of the transaction.
@@ -65,6 +73,9 @@ namespace SodaMachine
         //If the payment is greater than the cost of the soda, but the machine does not have ample change: Dispense payment back to the customer.
         //If the payment is exact to the cost of the soda:  Dispense soda.
         //If the payment does not meet the cost of the soda: dispense payment back to the customer.
+
+        //---------------------------------C O I N S  F U N C T I O N S-----------------------------
+        //------------------------------------------------------------------------------------------
         private void CalculateTransaction(List<Coin> payment, Can chosenSoda, Customer customer)
         {
            

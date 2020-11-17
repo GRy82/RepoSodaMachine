@@ -25,7 +25,7 @@ namespace SodaMachine
             bool willProceed = true;
             while (willProceed)
             {
-                _sodaMachine.BeginTransaction(_customer);
+                _sodaMachine.BeginTransaction(_customer);//go into SodaMachine class.
                 willProceed = UserInterface.ContinuePrompt("Continue to next transaction?");
                 Console.Clear();
             }
