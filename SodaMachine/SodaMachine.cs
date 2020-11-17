@@ -90,7 +90,8 @@ namespace SodaMachine
         //------------------------------------------------------------------------------------------
         private void CalculateTransaction(List<Coin> payment, Can chosenSoda, Customer customer)
         {
-           
+            double totalCoinValue = TotalCoinValue(payment);
+            bool hasEnoughMoney = totalCoinValue > chosenSoda.Price;
         }
         //Takes in the value of the amount of change needed.
         //Attempts to gather all the required coins from the sodamachine's register to make change.
