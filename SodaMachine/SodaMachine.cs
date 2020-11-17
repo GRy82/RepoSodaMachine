@@ -189,12 +189,20 @@ namespace SodaMachine
         //Takes in a list of coins to returnt he total value of the coins as a double.
         private double TotalCoinValue(List<Coin> payment)
         {
-           
+            double totalValue = 0;
+            foreach(Coin coin in payment)
+            {
+                totalValue += coin.Value;
+            }
+            return totalValue;
         }
         //Puts a list of coins into the soda machines register.
         private void DepositCoinsIntoRegister(List<Coin> coins)
         {
-           
+           foreach(Coin coin in coins)
+            {
+                _register.Add(coin);
+            }
         }
     }
 }
