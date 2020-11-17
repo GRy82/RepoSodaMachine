@@ -91,15 +91,66 @@ namespace SodaMachine
         private void CalculateTransaction(List<Coin> payment, Can chosenSoda, Customer customer)
         {
             double totalCoinValue = TotalCoinValue(payment);
-            bool hasEnoughMoney = totalCoinValue > chosenSoda.Price;
+            double changeValue = DetermineChange(totalCoinValue, chosenSoda.Price);
+            if(changeValue < 0){
+                DenyTransaction("You have insufficient funds for this transaction", payment, customer);
+            }
+            else{
+                DepositCoinsIntoRegister(payment);
+                List<Coin> registerCoins = GatherChange(changeValue);
+                if (TotalCoinValue(registerCoins) < changeValue)
+                {
+                    DepositCoinsIntoRegister(registerCoins);
+                    DenyTransaction("Not enough change. Supplying refund. Please use exact change.", payment, customer);
+                }
+                else
+                {
+                    customer.AddCoinsIntoWallet(registerCoins);
+                    customer.AddCanToBackpack(chosenSoda);
+                }
+            }
+            
         }
+
+        //
+        private void DenyTransaction(string output, List<Coin> payment, Customer customer)
+        {
+            UserInterface.OutputText(output);
+            customer.AddCoinsIntoWallet(payment);
+        }
+
         //Takes in the value of the amount of change needed.
         //Attempts to gather all the required coins from the sodamachine's register to make change.
         //Returns the list of coins as change to despense.
         //If the change cannot be made, return null.
         private List<Coin> GatherChange(double changeValue)
         {
-            
+            double currentChange = 0;
+            List<Coin> coinTemplate = GenerateCoinTemplate();
+            List<Coin> changeCoins = new List<Coin> { };
+            while(currentChange < changeValue)
+            {
+                foreach(Coin coin in coinTemplate)
+                {
+                    if (coin.Value <= (changeValue - currentChange))
+                    {
+                        while (RegisterHasCoin(coin.Name)) { 
+                            Coin registerCoin = GetCoinFromRegister(coin.Name);
+                            changeCoins.Add(registerCoin);
+                        }
+                    }
+                }
+                return changeCoins;
+            }
+        }
+        private List<Coin> GenerateCoinTemplate()
+        {
+            Coin pennyMold = new Penny();
+            Coin nickelMold = new Nickel();
+            Coin dimeMold = new Dime();
+            Coin quarterMold = new Quarter();
+            List<Coin> coinTemplate = new List<Coin> { quarterMold, dimeMold, nickelMold, pennyMold};
+            return coinTemplate;
         }
         //Reusable method to check if the register has a coin of that name.
         //If it does have one, return true.  Else, false.
@@ -116,7 +167,7 @@ namespace SodaMachine
         //Takes in the total payment amount and the price of can to return the change amount.
         private double DetermineChange(double totalPayment, double canPrice)
         {
-            
+            return (totalPayment - canPrice);
         }
         //Takes in a list of coins to returnt he total value of the coins as a double.
         private double TotalCoinValue(List<Coin> payment)
