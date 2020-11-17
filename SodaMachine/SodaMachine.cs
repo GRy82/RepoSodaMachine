@@ -26,8 +26,18 @@ namespace SodaMachine
         //A method to fill the sodamachines register with coin objects.
         public void FillRegister()
         {
-            
-
+            Coin[] pennys = new Penny[50];
+            Coin[] nickels = new Nickel[20];
+            Coin[] dimes = new Dime[10];
+            Coin[] quarters = new Quarter[20];
+            List<Coin[]> coinsArrays = new List<Coin[]> { pennys, nickels, dimes, quarters };
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < coinsArrays[i].Length; j++)
+                {
+                    _register.Add(coinsArrays[i][j]);
+                }
+            }
         }
         //A method to fill the sodamachines inventory with soda can objects.
         public void FillInventory()
