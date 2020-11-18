@@ -9,10 +9,10 @@ namespace SodaMachine
 
     class Credit
     {
-        private int creditLimit = 4000;
-        private int availableCredit = 200;
+        private double creditLimit = 4000;
+        private double availableCredit = 200;
 
-        public int AvailableCredit
+        public double AvailableCredit
         {
             get
             {
@@ -24,7 +24,7 @@ namespace SodaMachine
             }
         }
 
-        public int CreditLimit
+        public double CreditLimit
         {
             get
             {

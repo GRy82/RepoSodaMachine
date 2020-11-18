@@ -84,16 +84,17 @@ namespace SodaMachine
             string paymentMethod = UserInterface.ChoosePaymentMethod();
             MakePayment(paymentMethod, desiredProduct, customer);
         }
-
+        //Carry out results of transaction by calling CalculateTransaction, but with different parameter depedning on paymentMethod.
         private void MakePayment(string paymentMethod, Can desiredProduct, Customer customer)
-        {
-            var payment = customer.AccessCardInfo();
-            
+        {        
             if (paymentMethod == "Coins") {
-                payment = customer.GatherCoinsFromWallet(desiredProduct);
+                List<Coin> coinPayment = customer.GatherCoinsFromWallet(desiredProduct);
+                CalculateTransaction(coinPayment, desiredProduct, customer);
             }
-
-            CalculateTransaction(payment, desiredProduct, customer);
+            else {
+                Credit cardPayment = customer.AccessCardInfo();
+                CalculateTransaction(cardPayment, desiredProduct, customer);
+            }
         }
         //Gets a soda from the inventory based on the name of the soda.
         private Can GetSodaFromInventory(string nameOfSoda)
@@ -135,18 +136,26 @@ namespace SodaMachine
                 else if (registerChangeValue >= changeValue) {
                     DepositCoinsIntoRegister(payment);
                     customer.AddCoinsIntoWallet(registerCoins);
-                    customer.AddCanToBackpack(chosenSoda);
-                    _inventory.Remove(chosenSoda);
-                    UserInterface.EndMessage(chosenSoda.Name, changeValue);
+                    DispenseSoda(customer, chosenSoda, changeValue);
                 }
             }    
         }
 
         private void CalculateTransaction(Credit creditCard, Can chosenSoda, Customer customer)
         {
-
+            if(creditCard.AvailableCredit >= chosenSoda.Price)
+            {
+                creditCard.AvailableCredit -= chosenSoda.Price;
+                DispenseSoda(customer, chosenSoda, changeValue);
+            }
         }
 
+        private void DispenseSoda(Customer customer, Can chosenSoda, double changeValue)
+        {
+            customer.AddCanToBackpack(chosenSoda);
+            _inventory.Remove(chosenSoda);
+            UserInterface.EndMessage(chosenSoda.Name, changeValue);
+        }
         //
         private void DenyTransaction(string output, List<Coin> payment, Customer customer)
         {
