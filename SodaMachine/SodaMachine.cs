@@ -44,15 +44,22 @@ namespace SodaMachine
         {
             //rather arbitrary number of each flavor of soda objects generated.
             //Can be done dynamically with dictionary, but to avoid changing the starter code, will do one by one.
-            Can orangeOne = new OrangeSoda();
-            Can orangeTwo = new OrangeSoda();
-            Can orangeThree = new OrangeSoda();
-            Can rootBeerOne = new RootBeer();
-            Can rootBeerTwo = new RootBeer();
-            Can rootBeerThree = new RootBeer();
-            Can colaOne = new Cola();
-            Can colaTwo = new Cola();
-            Can colaThree = new Cola();
+            for (int i = 0; i < 5; i++) {
+                Can orangeSoda = new OrangeSoda();
+                _inventory.Add(orangeSoda);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                Can cola = new Cola();
+                _inventory.Add(cola);
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                Can rootBeer = new RootBeer();
+                _inventory.Add(rootBeer);
+            }
+
+
         }
         //Method to be called to start a transaction.
         //Takes in a customer which can be passed freely to which ever method needs it.
