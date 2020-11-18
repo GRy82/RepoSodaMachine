@@ -39,14 +39,17 @@ namespace SodaMachine
         public Coin GetCoinFromWallet(string coinName)
         {
             Coin returnCoin = new Coin();
-            List<Coin> coinTemplate = new List<Coin> { new Penny(), new Nickel(), new Dime(), new Quarter() };
-           foreach (Coin coin in coinTemplate)
+            List<Coin> coinTemplate = new List<Coin> { new Quarter(), new Nickel(), new Dime(), new Penny()};
+            int walletIndex = 0;
+           foreach (Coin coin in Wallet.Coins)
             {
                 if (coin.Name == coinName)
                 {
                     returnCoin = coin;
-                    Wallet.Coins.Remove(coin);
+                    Wallet.Coins.RemoveAt(walletIndex);
+                    return returnCoin;
                 }
+                walletIndex++;
             }
             return returnCoin;
         }

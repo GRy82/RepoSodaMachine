@@ -153,12 +153,11 @@ namespace SodaMachine
             {
                 foreach(Coin coin in coinTemplate)
                 {
-                    if (coin.Value <= (changeValue - currentChange))
+                    while (coin.Value <= (changeValue - currentChange) && RegisterHasCoin(coin.Name))
                     {
-                        while (RegisterHasCoin(coin.Name)) { 
-                            Coin registerCoin = GetCoinFromRegister(coin.Name);
-                            changeCoins.Add(registerCoin);
-                        }
+                        Coin registerCoin = GetCoinFromRegister(coin.Name);
+                        changeCoins.Add(registerCoin);
+                        currentChange += registerCoin.Value;
                     }
                 }
                 return changeCoins;//You have tried every coin type, but you can't reach the required amount of change exactly.
