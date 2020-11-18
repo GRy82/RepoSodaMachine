@@ -183,6 +183,7 @@ namespace SodaMachine
             {
                 totalValue += coin.Value;
             }
+
             Console.WriteLine($"You currently have ${totalValue} in hand");
         }
         //Used for any error messages.  Has a built in read line for readablity and console clear after.

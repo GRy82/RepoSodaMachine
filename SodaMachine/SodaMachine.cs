@@ -49,18 +49,15 @@ namespace SodaMachine
             //rather arbitrary number of each flavor of soda objects generated.
             //Can be done dynamically with dictionary, but to avoid changing the starter code, will do one by one.
             for (int i = 0; i < 5; i++) {
-                Can orangeSoda = new OrangeSoda();
-                _inventory.Add(orangeSoda);
+                _inventory.Add(new OrangeSoda());
             }
             for (int i = 0; i < 3; i++)
             {
-                Can cola = new Cola();
-                _inventory.Add(cola);
+                _inventory.Add(new Cola());
             }
             for (int i = 0; i < 1; i++)
             {
-                Can rootBeer = new RootBeer();
-                _inventory.Add(rootBeer);
+                _inventory.Add(new RootBeer());
             }
 
 
@@ -117,16 +114,17 @@ namespace SodaMachine
                 DenyTransaction("You have insufficient funds for this transaction", payment, customer);
             }
             else{
-                List<Coin> registerCoins = GatherChange(changeValue);
+                List<Coin> registerCoins = GatherChange(changeValue); //This function is working when quarters are paid, but not when other coin types are used....
                 double registerChangeValue = TotalCoinValue(registerCoins);
-                if (registerChangeValue < changeValue) {
+                if (registerChangeValue < changeValue) {   //Either an illogical expression or ^^^
                     DepositCoinsIntoRegister(registerCoins);
                     DenyTransaction("Not enough change. Supplying refund. Please use exact change.", payment, customer);
                 }
-                else if (registerChangeValue >= 0) {
+                else if (registerChangeValue >= changeValue) {
                     DepositCoinsIntoRegister(payment);
                     customer.AddCoinsIntoWallet(registerCoins);
                     customer.AddCanToBackpack(chosenSoda);
+                    _inventory.Remove(chosenSoda);
                     UserInterface.EndMessage(chosenSoda.Name, changeValue);
                 }
             }
