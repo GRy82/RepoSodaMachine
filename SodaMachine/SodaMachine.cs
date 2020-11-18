@@ -148,17 +148,17 @@ namespace SodaMachine
             double changeGathered = 0;
             List<Coin> coinTemplate = GenerateCoinTemplate();
             List<Coin> changeCoins = new List<Coin> { };
-            double changeDifference;
-            while(changeGathered < changeToReturn)
+            double changeDifference = changeToReturn;
+            while (changeGathered < changeToReturn)
             {
                 foreach(Coin coin in coinTemplate)
                 {
-                    changeDifference = Math.Round((changeToReturn - changeGathered), 2);
                     while (coin.Value <= changeDifference && RegisterHasCoin(coin.Name))
                     {
                         Coin registerCoin = GetCoinFromRegister(coin.Name);
                         changeCoins.Add(registerCoin);
                         changeGathered += registerCoin.Value;
+                        changeDifference = Math.Round((changeToReturn - changeGathered), 2);
                     }
                 }
                 return changeCoins;//You have tried every coin type, but you can't reach the required amount of change exactly.
