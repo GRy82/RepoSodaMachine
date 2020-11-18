@@ -20,17 +20,20 @@ namespace SodaMachine
         //Fills wallet with starting money
         private void FillRegister()
         {
-            Coin[] customerPennys = new Penny[50];
-            Coin[] customerNickels = new Nickel[10];
-            Coin[] customerDimes = new Dime[10];
-            Coin[] customerQuarters = new Quarter[12];
-            List<Coin[]> customerCoinsArrays = new List<Coin[]> { customerPennys, customerNickels, customerDimes, customerQuarters };
-            for (int i = 0; i < 4; i++)
+            for(int i = 0; i < 16; i++) {
+                Coins.Add(new Quarter());
+            }
+            for (int i = 0; i < 15; i++)
             {
-                for (int j = 0; j < customerCoinsArrays[i].Length; j++)
-                {
-                    Coins.Add(customerCoinsArrays[i][j]);
-                }
+                Coins.Add(new Nickel());
+            }
+            for (int i = 0; i < 15; i++)
+            {
+                Coins.Add(new Dime());
+            }
+            for (int i = 0; i < 25; i++)
+            {
+                Coins.Add(new Penny());
             }
         }
     }

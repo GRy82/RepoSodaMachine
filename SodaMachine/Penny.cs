@@ -17,5 +17,7 @@ namespace SodaMachine
             Name = "Penny";
         }
         //Member Methods (Can Do)
+        
+
     }
 }

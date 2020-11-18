@@ -26,17 +26,21 @@ namespace SodaMachine
         //A method to fill the sodamachines register with coin objects.
         public void FillRegister()
         {
-            Coin[] pennys = new Penny[50];
-            Coin[] nickels = new Nickel[20];
-            Coin[] dimes = new Dime[10];
-            Coin[] quarters = new Quarter[20];
-            List<Coin[]> coinsArrays = new List<Coin[]> { pennys, nickels, dimes, quarters };
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 20; i++)
             {
-                for (int j = 0; j < coinsArrays[i].Length; j++)
-                {
-                    _register.Add(coinsArrays[i][j]);
-                }
+                _register.Add(new Quarter());
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                _register.Add(new Nickel());
+            }
+            for (int i = 0; i < 10; i++)
+            {
+                _register.Add(new Dime());
+            }
+            for (int i = 0; i < 50; i++)
+            {
+                _register.Add(new Penny());
             }
         }
         //A method to fill the sodamachines inventory with soda can objects.
@@ -113,17 +117,17 @@ namespace SodaMachine
                 DenyTransaction("You have insufficient funds for this transaction", payment, customer);
             }
             else{
-                DepositCoinsIntoRegister(payment);
                 List<Coin> registerCoins = GatherChange(changeValue);
-                if (TotalCoinValue(registerCoins) < changeValue)
-                {
+                double registerChangeValue = TotalCoinValue(registerCoins);
+                if (registerChangeValue < changeValue) {
                     DepositCoinsIntoRegister(registerCoins);
                     DenyTransaction("Not enough change. Supplying refund. Please use exact change.", payment, customer);
                 }
-                else
-                {
+                else if (registerChangeValue >= 0) {
+                    DepositCoinsIntoRegister(payment);
                     customer.AddCoinsIntoWallet(registerCoins);
                     customer.AddCanToBackpack(chosenSoda);
+                    UserInterface.EndMessage(chosenSoda.Name, changeValue);
                 }
             }
             
