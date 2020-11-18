@@ -82,7 +82,17 @@ namespace SodaMachine
             string sodaName = UserInterface.SodaSelection(_inventory);
             Can desiredProduct = GetSodaFromInventory(sodaName);
             string paymentMethod = UserInterface.ChoosePaymentMethod();
-            List<Coin> payment = customer.GatherCoinsFromWallet(desiredProduct);
+            MakePayment(paymentMethod, desiredProduct, customer);
+        }
+
+        private void MakePayment(string paymentMethod, Can desiredProduct, Customer customer)
+        {
+            var payment = customer.AccessCardInfo();
+            
+            if (paymentMethod == "Coins") {
+                payment = customer.GatherCoinsFromWallet(desiredProduct);
+            }
+
             CalculateTransaction(payment, desiredProduct, customer);
         }
         //Gets a soda from the inventory based on the name of the soda.
@@ -130,6 +140,11 @@ namespace SodaMachine
                     UserInterface.EndMessage(chosenSoda.Name, changeValue);
                 }
             }    
+        }
+
+        private void CalculateTransaction(Credit creditCard, Can chosenSoda, Customer customer)
+        {
+
         }
 
         //

@@ -35,10 +35,6 @@ namespace SodaMachine
             return currentPayment;
         }
 
-        public Credit GatherPayment(Can selectedCan, "Credit")
-        {
-
-        }
         //Returns a coin object from the wallet based on the name passed into it.
         //Returns null if no coin can be found
         public Coin GetCoinFromWallet(string coinName)
