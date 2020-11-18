@@ -24,7 +24,7 @@ namespace SodaMachine
         //Takes in the selected can for price reference
         //Will need to get user input for coins they would like to add.
         //When all is said and done this method will return a list of coin objects that the customer will use a payment for their soda.
-        public List<Coin> GatherCoinsFromWallet(Can selectedCan)
+        public List<Coin> GatherCoinsFromWallet(Can selectedCan)//Once called GatherCoinsFromWallet circa 1:44 pm CST and earlier.
         {
             string chosenCoinName;
             List<Coin> currentPayment = new List<Coin> {};
@@ -33,6 +33,11 @@ namespace SodaMachine
                 currentPayment.Add(GetCoinFromWallet(chosenCoinName));
             } while (chosenCoinName != "Done");
             return currentPayment;
+        }
+
+        public Credit GatherPayment(Can selectedCan, "Credit")
+        {
+
         }
         //Returns a coin object from the wallet based on the name passed into it.
         //Returns null if no coin can be found

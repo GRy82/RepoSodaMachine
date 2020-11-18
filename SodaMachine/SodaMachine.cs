@@ -81,6 +81,7 @@ namespace SodaMachine
         {
             string sodaName = UserInterface.SodaSelection(_inventory);
             Can desiredProduct = GetSodaFromInventory(sodaName);
+            string paymentMethod = UserInterface.ChoosePaymentMethod();
             List<Coin> payment = customer.GatherCoinsFromWallet(desiredProduct);
             CalculateTransaction(payment, desiredProduct, customer);
         }
