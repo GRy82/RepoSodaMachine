@@ -118,6 +118,8 @@ namespace SodaMachine
 
         //---------------------------------C O I N S  F U N C T I O N S-----------------------------
         //------------------------------------------------------------------------------------------
+
+        //For coin transactions
         private void CalculateTransaction(List<Coin> payment, Can chosenSoda, Customer customer)
         {
             double totalCoinValue = TotalCoinValue(payment);
@@ -136,25 +138,29 @@ namespace SodaMachine
                 else if (registerChangeValue >= changeValue) {
                     DepositCoinsIntoRegister(payment);
                     customer.AddCoinsIntoWallet(registerCoins);
-                    DispenseSoda(customer, chosenSoda, changeValue);
+                    DispenseSoda(customer, chosenSoda, changeValue, false);
                 }
             }    
         }
 
+        //For credit transactions.
         private void CalculateTransaction(Credit creditCard, Can chosenSoda, Customer customer)
         {
             if(creditCard.AvailableCredit >= chosenSoda.Price)
             {
                 creditCard.AvailableCredit -= chosenSoda.Price;
-                DispenseSoda(customer, chosenSoda, changeValue);
+                DispenseSoda(customer, chosenSoda, chosenSoda.Price, true);
+            }
+            else  {
+                UserInterface.OutputText("Your card has been declined.");
             }
         }
 
-        private void DispenseSoda(Customer customer, Can chosenSoda, double changeValue)
+        private void DispenseSoda(Customer customer, Can chosenSoda, double numericOutputValue, bool credit)
         {
             customer.AddCanToBackpack(chosenSoda);
             _inventory.Remove(chosenSoda);
-            UserInterface.EndMessage(chosenSoda.Name, changeValue);
+            UserInterface.EndMessage(chosenSoda.Name, numericOutputValue, credit);
         }
         //
         private void DenyTransaction(string output, List<Coin> payment, Customer customer)
@@ -162,6 +168,7 @@ namespace SodaMachine
             UserInterface.OutputText(output);
             customer.AddCoinsIntoWallet(payment);
         }
+
 
         //Takes in the value of the amount of change needed.
         //Attempts to gather all the required coins from the sodamachine's register to make change.

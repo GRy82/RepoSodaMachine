@@ -144,7 +144,7 @@ namespace SodaMachine
             {
                 paymentOption = Console.ReadLine();
             } while (paymentOption.Length != 1 || (paymentOption[0] != 49 && paymentOption[0] != 50));
-            if (paymentOption[0] == 1) {
+            if (paymentOption[0] == 49) {
                 return "Coins";
             }
             return "Credit";
@@ -205,14 +205,18 @@ namespace SodaMachine
             Console.WriteLine($"You currently have ${totalValue.ToString("0.00")} in hand");
         }
         //Used for any error messages.  Has a built in read line for readablity and console clear after.
-        public static void EndMessage(string sodaName, double changeAmount)
+        public static void EndMessage(string sodaName, double outputNumber, bool credit)
         {
             Console.WriteLine($"Enjoy your {sodaName}.");
-            if(changeAmount > 0)
-            {
-                string changeString = changeAmount.ToString("0.00");
-                Console.WriteLine($"Despensing ${changeAmount}");
+            string outputString;
+            outputString = outputNumber.ToString("0.00");
+            if (!credit && outputNumber > 0) {
+                Console.WriteLine($"Despensing ${outputString}");
             }
+            else if (credit) {
+                Console.WriteLine($"Card Accepted. ${outputString} deducted.");
+            }
+
             Console.ReadLine();
         }
     }
