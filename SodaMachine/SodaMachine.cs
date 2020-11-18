@@ -110,6 +110,7 @@ namespace SodaMachine
         {
             double totalCoinValue = TotalCoinValue(payment);
             double changeValue = DetermineChange(totalCoinValue, chosenSoda.Price);
+            changeValue = Math.Round(changeValue, 2);
             if(changeValue < 0){
                 DenyTransaction("You have insufficient funds for this transaction", payment, customer);
             }
@@ -142,20 +143,22 @@ namespace SodaMachine
         //Attempts to gather all the required coins from the sodamachine's register to make change.
         //Returns the list of coins as change to despense.
         //If the change cannot be made, return null.
-        private List<Coin> GatherChange(double changeValue)
+        private List<Coin> GatherChange(double changeToReturn)
         {
-            double currentChange = 0;
+            double changeGathered = 0;
             List<Coin> coinTemplate = GenerateCoinTemplate();
             List<Coin> changeCoins = new List<Coin> { };
-            while(currentChange < changeValue)
+            double changeDifference;
+            while(changeGathered < changeToReturn)
             {
                 foreach(Coin coin in coinTemplate)
                 {
-                    while (coin.Value <= (changeValue - currentChange) && RegisterHasCoin(coin.Name))
+                    changeDifference = Math.Round((changeToReturn - changeGathered), 2);
+                    while (coin.Value <= changeDifference && RegisterHasCoin(coin.Name))
                     {
                         Coin registerCoin = GetCoinFromRegister(coin.Name);
                         changeCoins.Add(registerCoin);
-                        currentChange += registerCoin.Value;
+                        changeGathered += registerCoin.Value;
                     }
                 }
                 return changeCoins;//You have tried every coin type, but you can't reach the required amount of change exactly.
