@@ -115,9 +115,9 @@ namespace SodaMachine
                 DenyTransaction("You have insufficient funds for this transaction", payment, customer);
             }
             else{
-                List<Coin> registerCoins = GatherChange(changeValue); //This function is working when quarters are paid, but not when other coin types are used....
+                List<Coin> registerCoins = GatherChange(changeValue); 
                 double registerChangeValue = TotalCoinValue(registerCoins);
-                if (registerChangeValue < changeValue) {   //Either an illogical expression or ^^^
+                if (registerChangeValue < changeValue) {   
                     DepositCoinsIntoRegister(registerCoins);
                     DenyTransaction("Not enough change. Supplying refund. Please use exact change.", payment, customer);
                 }
@@ -128,8 +128,7 @@ namespace SodaMachine
                     _inventory.Remove(chosenSoda);
                     UserInterface.EndMessage(chosenSoda.Name, changeValue);
                 }
-            }
-            
+            }    
         }
 
         //

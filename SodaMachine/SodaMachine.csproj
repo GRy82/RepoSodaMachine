@@ -51,6 +51,7 @@
     <Compile Include="Dime.cs" />
     <Compile Include="Nickel.cs" />
     <Compile Include="OrangeSoda.cs" />
+    <Compile Include="Credit.cs" />
     <Compile Include="Penny.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

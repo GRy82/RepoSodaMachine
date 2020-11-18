@@ -134,6 +134,22 @@ namespace SodaMachine
             return validatedSodaSelection.Item2;
            
         }
+
+        //Returns user's preferred method of payment for the transaction
+        public static string ChoosePaymentMethod()
+        {
+            Console.WriteLine("Please select your preferred payment method.\n-1- Coins\n-2- Credit Card\n ");
+            string paymentOption;
+            do
+            {
+                paymentOption = Console.ReadLine();
+            } while (paymentOption.Length != 1 || (paymentOption[0] != 49 && paymentOption[0] != 50));
+            if (paymentOption[0] == 1) {
+                return "Coins";
+            }
+            return "Credit";
+        }
+
         //Uses a tuple to validate the soda selection.
         private static Tuple<bool,string> ValidateSodaSelection(int input, List<Can> uniqueCans)
         {

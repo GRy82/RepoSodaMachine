@@ -18,7 +18,7 @@ namespace SodaMachine
         }
         //Member Methods (Can Do)
         //Fills wallet with starting money
-        private void FillRegister()
+        private void FillRegister()//This will start the customer with $6.50.
         {
             for(int i = 0; i < 16; i++) {
                 Coins.Add(new Quarter());
