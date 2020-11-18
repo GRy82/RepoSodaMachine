@@ -10,6 +10,8 @@ namespace SodaMachine
     {
         static void Main(string[] args)
         {
+            ConsoleColor[] colors = (ConsoleColor[])ConsoleColor.GetValues(typeof(ConsoleColor)); //index 4 is red, 3, 9 are blue beautiful. I like 11
+            Console.ForegroundColor = colors[11];
             Simulation simulation = new Simulation();
             simulation.Simulate();
         }
